@@ -4,15 +4,12 @@ using MilkingRoomVisualPerformancePatch.AssetBundles;
 using MilkingRoomVisualPerformancePatch.UpdaterShader;
 using System.Collections.Generic;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace MilkingRoomVisualPerformancePatch.Patches;
+namespace MilkingRoomVisualPerformancePatch.Features;
 
-[HarmonyPatch(typeof(SeqObjectPoolManager), nameof(SeqObjectPoolManager.Initialize))]
-public class SeqObjectPoolManagerPatch
+public static class MilkingRoomLiquid
 {
-    [HarmonyPostfix]
-    public static void InitializePostfix()
+    public static void InjectShader()
     {
         var instance = SeqObjectPoolManager.Instance;
         Dictionary<string, List<PooledObject>> PooledObjectDictionary =
@@ -24,21 +21,24 @@ public class SeqObjectPoolManagerPatch
         var moterMask0 = milkingRoom.transform.Find("Seat (0)/Moter/Mask");
         var moterMask1 = milkingRoom.transform.Find("Seat (1)/Moter/Mask");
 
-        SpriteRenderer[] spriteRendererList;
-        foreach(var mask in new[] { tankMask, moterMask0, moterMask1 })
-        {
-            Object.Destroy(mask.GetComponent<SpriteMask>());
-            spriteRendererList = mask.GetComponentsInChildren<SpriteRenderer>(true);
-            foreach(var spriteRenderer in spriteRendererList)
-            {
-                spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
-            }
-        }
+        //SpriteRenderer[] spriteRendererList;
+        //foreach(var mask in new[] { tankMask, moterMask0, moterMask1 })
+        //{
+        //    Object.Destroy(mask.GetComponent<SpriteMask>());
+        //    spriteRendererList = mask.GetComponentsInChildren<SpriteRenderer>(true);
+        //    foreach(var spriteRenderer in spriteRendererList)
+        //    {
+        //        spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+        //    }
+        //}
+        var pos = tankMask.transform.localPosition;
+        pos.y = 0.77f;
+        tankMask.transform.localPosition = pos;
 
         var tankUpdater = tankMask.GetChild(0).gameObject;
         Object.Destroy(tankUpdater.GetComponent<UpdaterTransformMilkTank>());
         Object.Destroy(tankUpdater.transform.GetChild(0).gameObject);
-        tankUpdater.transform.localPosition = Vector3.zero;
+        //tankUpdater.transform.localPosition = Vector3.zero;
         tankUpdater.GetComponent<SpriteRenderer>().sprite = ABLoader.SpriteTankLiquid;
         tankUpdater.AddComponent<UpdaterShaderTank>().Init(ABLoader.ShaderTankLiquid,ABLoader.SpriteSeamlessWave);
 

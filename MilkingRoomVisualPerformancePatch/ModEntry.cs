@@ -1,7 +1,5 @@
-﻿using MBM.ModLoader.Core;
-using MBM.ModLoader.Settings;
-using MilkingRoomVisualPerformancePatch.AssetBundles;
-using System.Collections.Generic;
+﻿using MilkingRoomVisualPerformancePatch.AssetBundles;
+using MilkingRoomVisualPerformancePatch.Features;
 using UnityEngine;
 
 namespace MilkingRoomVisualPerformancePatch;
@@ -14,26 +12,9 @@ public static class ModEntry
     {
         ABLoader.Load();
 
-        TimeScaleOptimizerCompatibility();
+        MilkingRoomLiquid.InjectShader();
 
         Log("MilkingRoomVisualPerformancePatch Mod loaded!");
-    }
-
-    public static void TimeScaleOptimizerCompatibility()
-    {
-        ModSettings.OnChanged("TimeScaleOptimizer", "Hose Masks", v =>
-        {
-            if ((bool)v) ModSettings.Set("TimeScaleOptimizer", "Hose Masks", false);
-            else {
-                ModSettings.RegisterBool("TimeScaleOptimizer", "Hose Masks", false, "Hose Masks", null!, "MRVP");
-                ModSettings.SetVisibleWhen("TimeScaleOptimizer", "Hose Masks",
-                    new Dictionary<string, string[]>
-                    {
-                        { "false", new[] { "MRVP" } }
-                    }
-                    );
-            };
-        });
     }
 
     internal static void Log(string msg) => Debug.Log($"[MRVP] {msg}");
