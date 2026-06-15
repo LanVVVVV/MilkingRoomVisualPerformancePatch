@@ -1,6 +1,6 @@
 # MilkingRoomVisualPerformancePatch
 
-MilkingRoomVisualPerformancePatch is a mod for **Monster Black Market** —— improve the animation performance of the Milkingroom..
+MilkingRoomVisualPerformancePatch is a mod for **Monster Black Market** —— improve the animation performance of the Milkingroom.
 
 ### Features
 
@@ -8,11 +8,7 @@ MilkingRoomVisualPerformancePatch is a mod for **Monster Black Market** —— i
 
 ### Requirements
 
-| Dependency           | Version |
-| -------------------- | ------- |
-| MBM.ModLoader        | latest  |
-| Monster Black Market | latest  |
-
-### Compatibility
-
-- ✅ **TimeScaleOptimizer** — automatically disable its culling mask and hide its settings.
+| Dependency           | Version    |
+| -------------------- | ---------- |
+| MBM.ModLoader        | ≥ 0.6.0    |
+| Monster Black Market | ≥ 2.1.2.0  |
